@@ -4,7 +4,6 @@ describe("A suite", function () {
         expect(true).toBe(true);
     });
 });
-
 describe("A suite is just a function", function () {
     var a;
     it("and so is a spec", function () {
@@ -12,7 +11,6 @@ describe("A suite is just a function", function () {
         expect(a).toBe(true);
     });
 });
-
 describe("The 'toBe' matcher compares with ===", function () {
     it("and has a positive case ", function () {
         expect(true).toBe(true);
@@ -21,7 +19,6 @@ describe("The 'toBe' matcher compares with ===", function () {
         expect(false).not.toBe(true);
     });
 });
-
 describe("Included matchers:", function () {
     it("The 'toBe' matcher compares with ===", function () {
         var a = 12;
@@ -46,14 +43,12 @@ describe("Included matchers:", function () {
             expect(foo).toEqual(bar);
         });
     });
-
     it("The 'toMatch' matcher is for regular expressions", function () {
         var message = 'foo bar baz';
         expect(message).toMatch(/bar/);
         expect(message).toMatch('bar');
         expect(message).not.toMatch(/quux/);
     });
-
     it("The 'toBeDefined' matcher compares against `undefined`", function () {
         var a = {
             foo: 'foo'
@@ -61,7 +56,6 @@ describe("Included matchers:", function () {
         expect(a.foo).toBeDefined();
         expect(a.bar).not.toBeDefined();
     });
-
     it("The `toBeUndefined` matcher compares against `undefined`", function () {
         var a = {
             foo: 'foo'
@@ -69,7 +63,6 @@ describe("Included matchers:", function () {
         expect(a.foo).not.toBeUndefined();
         expect(a.bar).toBeUndefined();
     });
-
     it("The 'toBeNull' matcher compares against null", function () {
         var a = null;
         var foo = 'foo';
@@ -77,43 +70,36 @@ describe("Included matchers:", function () {
         expect(a).toBeNull();
         expect(foo).not.toBeNull();
     });
-
     it("The 'toBeTruthy' matcher is for boolean casting testing", function () {
         var a, foo = 'foo';
         expect(foo).toBeTruthy();
         expect(a).not.toBeTruthy();
     });
-
     it("The 'toBeFalsy' matcher is for boolean casting testing", function () {
         var a, foo = 'foo';
         expect(a).toBeFalsy();
         expect(foo).not.toBeFalsy();
     });
-
     it("The 'toContain' matcher is for finding an item in an Array", function () {
         var a = ['foo', 'bar', 'baz'];
         expect(a).toContain('bar');
         expect(a).not.toContain('quux');
     });
-
     it("The 'toBeLessThan' matcher is for mathematical comparisons", function () {
         var pi = 3.1415926, e = 2.78;
         expect(e).toBeLessThan(pi);
         expect(pi).not.toBeLessThan(e);
     });
-
     it("The 'toBeGreaterThan' is for mathematical comparisons", function () {
         var pi = 3.1415926, e = 2.78;
         expect(pi).toBeGreaterThan(e);
         expect(e).not.toBeGreaterThan(pi);
     });
-
     it("The 'toBeCloseTo' matcher is for precision math comparison", function () {
         var pi = 3.1415926, e = 2.78;
         expect(pi).not.toBeCloseTo(e, 0.1);
         expect(pi).toBeCloseTo(e, 0);
     });
-
     it("The 'toThrow' matcher is for testing if a function throws an exception", function () {
         var foo = function () {
             return 1 + 2;
@@ -125,14 +111,12 @@ describe("Included matchers:", function () {
         expect(bar).toThrow();
     });
 });
-
 describe("A spec", function () {
     it("is just a function, so it can contain any code", function () {
         var foo = 0;
         foo += 1;
         expect(foo).toEqual(1);
     });
-
     it("can have more than one expectation", function () {
         var foo = 0;
         foo += 1;
@@ -140,7 +124,6 @@ describe("A spec", function () {
         expect(true).toEqual(true);
     });
 });
-
 describe("A spec (with setup and tear-down)", function () {
     var foo;
     beforeEach(function () {
@@ -158,7 +141,6 @@ describe("A spec (with setup and tear-down)", function () {
         expect(true).toEqual(true);
     });
 });
-
 describe("A spec", function () {
     var foo;
     beforeEach(function () {
@@ -185,7 +167,6 @@ describe("A spec", function () {
         });
     });
 });
-
 xdescribe("A spec", function () {
     var foo;
     beforeEach(function () {
@@ -196,7 +177,6 @@ xdescribe("A spec", function () {
         expect(foo).toEqual(1);
     });
 });
-
 describe("A spy", function () {
     var foo, bar = null;
     beforeEach(function () {
@@ -229,7 +209,6 @@ describe("A spy", function () {
         expect(bar).toBeNull();
     });
 });
-
 describe("A spy, when configured to call through", function () {
     var foo, bar, fetchedBar;
     beforeEach(function () {
@@ -255,7 +234,6 @@ describe("A spy, when configured to call through", function () {
         expect(fetchedBar).toEqual(123);
     });
 });
-
 describe("A spy, when faking a return value", function () {
     var foo, bar, fetchedBar;
     beforeEach(function () {
@@ -281,7 +259,6 @@ describe("A spy, when faking a return value", function () {
         expect(fetchedBar).toEqual(745);
     });
 });
-
 describe("A spy, when faking a return value", function () {
     var foo, bar, fetchedBar;
     beforeEach(function () {
@@ -309,10 +286,8 @@ describe("A spy, when faking a return value", function () {
         expect(fetchedBar).toEqual(1001);
     });
 });
-
 describe("A spy, when created manually", function () {
     var whatAmI;
-
     beforeEach(function () {
         whatAmI = jasmine.createSpy('whatAmI');
         whatAmI("I", "am", "a", "spy");
@@ -333,7 +308,6 @@ describe("A spy, when created manually", function () {
         expect(whatAmI.mostRecentCall.args[0]).toEqual("I");
     });
 });
-
 describe("Multiple spies, when created manually", function () {
     var tape;
     beforeEach(function () {
@@ -358,7 +332,6 @@ describe("Multiple spies, when created manually", function () {
         expect(tape.rewind).toHaveBeenCalledWith(0);
     });
 });
-
 describe("jasmine.any", function () {
     it("matches any value", function () {
         expect({}).toEqual(jasmine.any(Object));
@@ -374,7 +347,6 @@ describe("jasmine.any", function () {
         });
     });
 });
-
 describe("Manually ticking the Jasmine Mock Clock", function () {
     var timerCallback;
     beforeEach(function () {
@@ -389,7 +361,6 @@ describe("Manually ticking the Jasmine Mock Clock", function () {
         jasmine.Clock.tick(101);
         expect(timerCallback).toHaveBeenCalled();
     });
-
     it("causes an interval to be called synchronously", function () {
         setInterval(function () {
             timerCallback();
@@ -403,7 +374,6 @@ describe("Manually ticking the Jasmine Mock Clock", function () {
         expect(timerCallback.callCount).toEqual(2);
     });
 });
-
 describe("Asynchronous specs", function () {
     var value, flag;
     it("should support async execution of test preparation and exepectations", function () {
@@ -423,7 +393,6 @@ describe("Asynchronous specs", function () {
         });
     });
 });
-
 (function () {
     var jasmineEnv = jasmine.getEnv();
     jasmineEnv.updateInterval = 250;
@@ -437,11 +406,9 @@ describe("Asynchronous specs", function () {
         if (currentWindowOnload) {
             currentWindowOnload(null);
         }
-
         document.querySelector('.version').innerHTML = jasmineEnv.versionString();
         execJasmine();
     };
-
     function execJasmine() {
         jasmineEnv.execute();
     }
