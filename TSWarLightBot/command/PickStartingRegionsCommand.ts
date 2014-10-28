@@ -11,8 +11,10 @@
 'use strict';
 
 import ICommand = require('./interface/ICommand');
-import ICommandAnswer = require('./../interface/ICommandAnswer');
+import IAnswer = require('./../interface/IAnswer');
 import ICommandData = require('./../interface/ICommandData');
+import Consts = require('./../Consts');
+import util = require('util');
 
 /*
  * Handles pick_starting_regions command from the game engine. Request for the bot to return his place armies moves and 
@@ -24,21 +26,32 @@ class PickStartingRegionsCommand implements ICommand {
      * @param data {ICommandData} - Information about the command.
      * @returns {ICommandData} - The command answer.
      * Example: 
-     * getCommandAnswer({
+     * getAnswer({
      *     line: 'pick_starting_regions 2000', 
      *     command: CommandEnum.pick_starting_regions,
      *     option: undefined,
-     *     data: ['2000']
+     *     data: ['2000', '1', '7', '12', '13', '18', '15', '24', '25', '29', '37', '42', '41']
      * });
-     * 
-     * Example return:
-     * {
-     *     succes: true,
-     *     value: '1 7 24 25 41 42'
-     * }
+     * returns:
+     *     {
+     *         succes: true,
+     *         value: '1 7 24 25 41 42'
+     *     }
      */
-    public getCommandAnswer(commandData: ICommandData): ICommandAnswer {
-        return null;
+    public getAnswer(commandData: ICommandData): IAnswer {
+        if (commandData.data.length < Consts.NUMBER_OF_REGIONS_TO_PICK + 1) {
+            return {
+                succes: false,
+                value: util.format(Consts.NOT_ENOUGHT_REGIONS, commandData.line)
+            };
+        }
+
+        commandData.data.shift();
+        commandData.data.shuffle();
+        return {
+            succes: true,
+            value: commandData.data.slice(0, Consts.NUMBER_OF_REGIONS_TO_PICK).join(' ')
+        };
     }
 }
 

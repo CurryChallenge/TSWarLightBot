@@ -12,9 +12,12 @@
 
 import ICommand = require('./interface/ICommand');
 import ICommandMethod = require('./../interface/ICommandMethod');
-import ICommandAnswer = require('./../interface/ICommandAnswer');
+import IAnswer = require('./../interface/IAnswer');
 import ICommandData = require('./../interface/ICommandData');
+import IOptionSetting = require('./interface/IOptionSetting');
 import OptionEnum = require('../enum/OptionEnum');
+import Consts = require('../Consts');
+import util = require('util');
 
 /*
  * Handles settings command from the game engine. The name of your bot is given, the name of your opponent bot is given 
@@ -27,44 +30,84 @@ class SettingsCommand implements ICommand {
      * Create an instance of the Settings class.
      * @constructor
      */
-    constructor() {
-        this.optionMethodList[OptionEnum.your_bot] = (commandData: ICommandData): ICommandAnswer => {
+    constructor(private settings: IOptionSetting) {
+        this.optionMethodList[OptionEnum.your_bot] = (commandData: ICommandData): IAnswer => {
             return this.your_bot(commandData);
         };
 
-        this.optionMethodList[OptionEnum.opponent_bot] = (commandData: ICommandData): ICommandAnswer => {
+        this.optionMethodList[OptionEnum.opponent_bot] = (commandData: ICommandData): IAnswer => {
             return this.opponent_bot(commandData);
+        };
+
+        this.optionMethodList[OptionEnum.starting_armies] = (commandData: ICommandData): IAnswer => {
+            return this.starting_armies(commandData);
         };
     }
 
     /*
      * Gets the answer from the bot for the settings command.
      * @param data {ICommandData} - Information about the command.
-     * @returns {ICommandData} - The command answer.
+     * @returns {IAnswer} - The command answer.
      * Example: 
-     * getCommandAnswer({
+     * getAnswer({
      *     line: 'settings your_bot player1',
      *     command: CommandEnum.settings,
      *     option: OptionEnum.your_bot,
      *     data: ['player1']
      * });
-     *
-     * Example return:
-     * {
-     *     succes: true,
-     *     value: '1 7 24 25 41 42'
-     * }
+     * returns:
+     *      {
+     *          succes: true,
+     *          value: ''
+     *      }
      */
-    public getCommandAnswer(commandData: ICommandData): ICommandAnswer {
-        return null;
+    public getAnswer(commandData: ICommandData): IAnswer {
+        var optionMethod: (data: ICommandData) => IAnswer = this.optionMethodList[commandData.option];
+
+        if (optionMethod) {
+            return optionMethod(commandData);
+        } else {
+            return {
+                succes: false,
+                value: util.format(Consts.UNABLE_TO_EXECUTE, commandData.line)
+            };
+        }
     }
 
-    public your_bot(commandData: ICommandData): ICommandAnswer {
-        return null;
+    /*
+     * Set the your_bot setting to the players name, retreived from the commandData.data
+     */
+    public your_bot(commandData: ICommandData): IAnswer {
+        this.settings[OptionEnum.your_bot] = commandData.data[0];
+
+        return {
+            succes: true,
+            value: ''
+        };
     }
 
-    public opponent_bot(commandData: ICommandData): ICommandAnswer {
-        return null;
+     /*
+     * Set the opponent_bot setting to the players name, retreived from the commandData.data
+     */
+    public opponent_bot(commandData: ICommandData): IAnswer {
+        this.settings[OptionEnum.opponent_bot] = commandData.data[0];
+
+        return {
+            succes: true,
+            value: ''
+        };
+    }
+
+     /*
+     * Set the starting_armies setting to the players name, retreived from the commandData.data
+     */
+    public starting_armies(commandData: ICommandData): IAnswer {
+        this.settings[OptionEnum.starting_armies] = commandData.data[0];
+
+        return {
+            succes: true,
+            value: ''
+        };
     }
 }
 

@@ -11,7 +11,7 @@
 'use strict';
 
 import ICommand = require('./interface/ICommand');
-import ICommandAnswer = require('./../interface/ICommandAnswer');
+import IAnswer = require('./../interface/IAnswer');
 import ICommandData = require('./../interface/ICommandData');
 
 /*
@@ -26,7 +26,7 @@ class OpponentMovesCommand implements ICommand {
      * Isn't used in the starter bot. 
      * TODO: Find out what the data looks like.
      * Example: 
-     * getCommandAnswer({
+     * getAnswer({
      *     line: 'opponent_moves',
      *     command: CommandEnum.opponent_moves,
      *     option: undefined,
@@ -39,8 +39,11 @@ class OpponentMovesCommand implements ICommand {
      *     value: ''
      * }
      */
-    public getCommandAnswer(commandData: ICommandData): ICommandAnswer {
-        return null;
+    public getAnswer(commandData: ICommandData): IAnswer {
+        return {
+            succes: true,
+            value: ''
+        };
     }
 }
 

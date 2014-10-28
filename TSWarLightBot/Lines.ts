@@ -11,12 +11,13 @@
 'use strict';
 
 import ILines = require('./interface/ILines');
-import ICommandAnswer = require('./interface/ICommandAnswer');
+import IAnswer = require('./interface/IAnswer');
 import ICommandData = require('./interface/ICommandData');
 import ICommandMethod = require('./interface/ICommandMethod');
 import Consts = require('./Consts');
 import CommandEnum = require('./enum/CommandEnum');
 import OptionEnum = require('./enum/OptionEnum');
+import ShuffleArray = require('./command/helper/ShuffleArray');
 import util = require('util');
 
 /*
@@ -29,12 +30,17 @@ class Lines implements ILines {
     /*
      * Gets the answer from the bot by passing a command to the right command class.
      * @param line {string} - string containing the command information.
-     * @returns {ICommandData} - The command answer.
-     * Example : getCommandAnswer('pick_starting_regions 2000 1 7 12 13 18 15 24 25 29 37 42 41');
+     * @returns {IAnswer} - The command answer.
+     * Example : getAnswer('pick_starting_regions 2000 1 7 12 13 18 15 24 25 29 37 42 41');
+     * returns :
+     *         {
+     *             succes: true,
+     *             value: '1 7 12 13 18 15'
+     *         }
      */
-    public getCommandAnswer(line: string): ICommandAnswer {
+    public getAnswer(line: string): IAnswer {
         var commandData: ICommandData = this.getCommandData(line);
-        var commandMethod: (data: ICommandData) => ICommandAnswer = this.commandMethodList[commandData.command];
+        var commandMethod: (data: ICommandData) => IAnswer = this.commandMethodList[commandData.command];
 
         if (commandMethod) {
             return commandMethod(commandData);
@@ -51,6 +57,7 @@ class Lines implements ILines {
      * @param line {string} - string containing the command information.
      * @returns {ICommandData} - The command information.
      * Example : getCommandData('settings opponent_bot player2');
+     * returns :
      *           {
      *               line: 'settings opponent_bot player2',
      *               command: CommandEnum.settings,
@@ -59,7 +66,7 @@ class Lines implements ILines {
      *           }
      */
     public getCommandData(line: string): ICommandData {
-        var lineParts: string[] = line.split(' ');
+        var lineParts: ShuffleArray<string> = new ShuffleArray<string>(line.trim().split(' '));
         var command: CommandEnum = this.getEnum(lineParts.shift(), CommandEnum);
         var part: string = lineParts.shift();
         var option: OptionEnum = this.getEnum(part, OptionEnum);
