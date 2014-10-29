@@ -56,8 +56,18 @@ class Lines implements ILines {
      *           }
      */
     public getCommandData(line: string): ICommandData {
+        if (line === null || line.trim() === '' ) {
+            return {
+                line: undefined,
+                command: undefined,
+                option: undefined,
+                data: undefined
+            }; 
+        }
+        
         var lineParts: ShuffleArray<string> = new ShuffleArray<string>(line.trim().split(' '));
         var command: CommandEnum = this.getEnum(lineParts.shift(), CommandEnum);
+
 
         return {
             line: undefined,
