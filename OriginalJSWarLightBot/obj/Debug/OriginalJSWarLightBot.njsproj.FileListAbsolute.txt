@@ -1,0 +1,2 @@
+C:\Projects\CurryChallenge\TSWarLightBot\OriginalJSWarLightBot\obj\Debug\OriginalJSWarLightBot.njsprojResolveAssemblyReference.cache
+C:\Projects\CurryChallenge\TSWarLightBot\OriginalJSWarLightBot\bin\Microsoft.NodejsTools.WebRole.dll

@@ -1,0 +1,1 @@
+C:\Projects\CurryChallenge\TSWarLightBot\TSWarLightBotEmpty.specs\bin\Microsoft.NodejsTools.WebRole.dll
