@@ -56,14 +56,18 @@ class Lines implements ILines {
      *           }
      */
     public getCommandData(line: string): ICommandData {
-        var lineParts: ShuffleArray<string> = new ShuffleArray<string>(line.trim().split(' '));
+        var lineParts: ShuffleArray<string> = new ShuffleArray<string>(line.trim().replace('/','').split(' '));
         var command: CommandEnum = this.getEnum(lineParts.shift(), CommandEnum);
 
+        var options: OptionEnum = this.getEnum(lineParts.shift(), OptionEnum);
+
+          
+                
         return {
             line: undefined,
             command: command,
-            option: undefined,
-            data: undefined
+            option: options,
+            data: lineParts
         };
     }
 
@@ -71,6 +75,7 @@ class Lines implements ILines {
         if (!value) {
             return undefined;
         }
+        return (enumType)[value];
     }
 }
 

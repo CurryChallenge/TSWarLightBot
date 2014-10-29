@@ -150,7 +150,10 @@ describe('lines', (): void => {
             // assert
             expect(result.command).toBe(CommandEnum.setup_map);
             expect(result.option).toBe(OptionEnum.super_regions);
-            expect(result.data).toBe(['1', '2', '2', '5']);
+            expect(result.data[0]).toBe('1');
+            expect(result.data[1]).toBe('2');
+            expect(result.data[2]).toBe('2');
+            expect(result.data[3]).toBe('5');
         });
 
         // pick_starting_regions 2000 1 7 12 13 18 15 24 25 29 37 42 41.
