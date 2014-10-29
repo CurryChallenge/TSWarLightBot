@@ -59,12 +59,40 @@ class Lines implements ILines {
         var lineParts: ShuffleArray<string> = new ShuffleArray<string>(line.trim().split(' '));
         var command: CommandEnum = this.getEnum(lineParts.shift(), CommandEnum);
 
-        return {
+        var commandData: ICommandData = {
             line: undefined,
             command: command,
             option: undefined,
             data: undefined
         };
+
+        commandData.line = line;
+
+        // parse command
+        switch (lineParts[0]) {
+            case 'setup_map':
+                commandData.command = CommandEnum.setup_map;
+                break;
+            case 'pick_starting_regions':
+                commandData.command = CommandEnum.pick_starting_regions;
+                break;    
+            case 'settings':
+                commandData.command = CommandEnum.settings;
+                break;  
+            case 'update_map':
+                commandData.command = CommandEnum.update_map;
+                break;  
+            case 'opponent_moves':
+                commandData.command = CommandEnum.opponent_moves;
+                break; 
+            case 'go':
+                commandData.command = CommandEnum.go;
+                break; 
+            default:
+                commandData.command = undefined;
+        }
+
+        return commandData;
     }
 
     private getEnum(value: string, enumType: any): any {
