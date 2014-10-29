@@ -61,59 +61,78 @@ describe('lines', (): void => {
             var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.command).toBe(undefined);
         });
 
         it('Should return ICommandData.command is undefined when the line contains an invalid command', (): void => {
             // arange
+            lineMock = 'JanIsStout';
 
             // act
             var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.command).toBe(undefined);
         });
 
         it('Should return ICommandData.command as CommandEnum.settings if the line contains settings', (): void => {
             // arange
+            lineMock = 'settings';
 
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.command).toBe(CommandEnum.settings);
         });
 
         // Het resultaat van getCommandData is een ICommandData instantie en bevat een option property.
         it('Should return ICommandData.option as OptionEnum.your_bot if the line contains your_bot', (): void => {
             // arange
+            lineMock = 'settings your_bot';
 
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.option).toBe(OptionEnum.your_bot);
         });
 
         // Een string met een / er in is niet een valide enum waarde dus hebben we de / verwijderd.
-        it('Should return ICommandData.option is OptionEnum.attacktransfer if the line contains a attack/transfer', (): void => {
+        it('Should return ICommandData.option is OptionEnum.attacktransfer if the line contains an attack/transfer', (): void => {
             // arange
-
+            lineMock = 'go attack/transfer';
+            
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.option).toBe(OptionEnum.attacktransfer);
         });
 
         // Controlleer of hij niet crashed op een missende option.
         it('Should return ICommandData.option undefined if the line contains only 1 linepart', (): void => {
             // arange
+            lineMock = 'go';
 
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.option).toBe(undefined);
         });
 
         // update_map 1 player1 2 2 player1 4 3 neutral 2 4 player2 5.
         it('Should return ICommandData.option undefined for the update_map command which has no options', (): void => {
             // arange
+            lineMock = 'update_map 1 player1 2 2 player1 4 3 neutral 2 4 player2 5';
 
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.command).toBe(CommandEnum.update_map);
+            expect(result.option).toBe(undefined);
         });
 
         // setup_map super_regions 1 2 2 5.
@@ -121,38 +140,55 @@ describe('lines', (): void => {
         // Het resultaat van getCommandData is een ICommandData instantie en bevat een data property.
         it('Should return the right data for the CommandEnum.setup_map command with OptionEnum.super_regions.', (): void => {
             // arange
+            lineMock = 'setup_map super_regions 1 2 2 5';
 
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.command).toBe(CommandEnum.setup_map);
+            expect(result.option).toBe(OptionEnum.super_regions);
+            expect(result.data).toBe(['1', '2', '2', '5']);
         });
 
         // pick_starting_regions 2000 1 7 12 13 18 15 24 25 29 37 42 41.
         // resultaat zou ['2000', '1', '7', '12', '13', '18', '15', '24', '25', '29', '37', '42', '41'] moeten zijn.
         it('Should return the right data for the CommandEnum.pick_starting_regions which has no options', (): void => {
             // arange
+            lineMock = 'pick_starting_regions 2000 1 7 12 13 18 15 24 25 29 37 42 41';
 
             // act
+            var result: ICommandData = lines.getCommandData(lineMock);
 
             // assert
+            expect(result.command).toBe(CommandEnum.setup_map);
+            expect(result.option).toBe(OptionEnum.super_regions);
+            expect(result.data).toBe(['1', '2', '2', '5']);
         });
 
         // Het resultaat van getCommandData is een ICommandData instantie en bevat een line property.
-        it('Should put origial line in line', (): void => {
+        it('Should put original line in line', (): void => {
             // arange
+            lineMock = 'lineproperty';
 
             // act
-
+            var result: ICommandData = lines.getCommandData(lineMock);
+            
             // assert
+            expect(result.line).toBeDefined();
         });
 
         // Controlleer ook of hij maar 1 keer wordt aangeroepen.
         it('Should call trim on the line.', (): void => {
             // arrange
+            lineMock = 'lineproperty     ';
+            var spy = spyOn(lineMock, 'trim');
 
             // act
-
+            lines.getCommandData(lineMock);
+            
             // assert
+            expect(spy.calls.length).toEqual(1);
         });
     });
 
